@@ -1,0 +1,52 @@
+//@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Mulish&display=swap');
+
+:root {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  padding-left: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: $font-mulish;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+
+  @include mq(medium) {
+    width: 85%;
+  }
+  @include mq(large) {
+    width: 80%;
+  }
+}
