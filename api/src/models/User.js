@@ -8,11 +8,6 @@ module.exports = (sequelize) => {
       primaryKey: true, 
       autoIncrement: true
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -36,30 +31,12 @@ module.exports = (sequelize) => {
     date_of_birth: {
       type: DataTypes.STRING,
     },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    city: {
-      type: DataTypes.STRING,
-    },
-    zip_code:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     country: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    reset_password: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     image: {
       type: DataTypes.TEXT
     },
-  }, {
-    timestamps: false
   });
 };

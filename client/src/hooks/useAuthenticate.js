@@ -13,7 +13,7 @@ export default function useAuthenticate (){
     const token = sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
 
     const authenticate = () => {
-        axios.get('/authenticate', { 
+/*         axios.get('/authenticate', { 
             headers: {
             'Authorization': `Bearer ${token}`
             }
@@ -26,7 +26,7 @@ export default function useAuthenticate (){
             sessionStorage.removeItem('jwt');
             localStorage.removeItem('jwt');
             history.push('/');
-        })
+        }) */
     }
         
       return {

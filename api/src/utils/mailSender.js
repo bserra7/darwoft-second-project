@@ -1,11 +1,13 @@
+require('dotenv').config();
 const nodemailer = require('nodemailer');
+const { MAIL_USER, MAIL_PASS, MAIL_HOST, LINK_RECOVER_PASS  } = process.env;
 
 const transport = nodemailer.createTransport({
     port: 465,
-    host: "smtp.gmail.com",
+    host: MAIL_HOST,
     auth: {
-        pass: 'Qwerty1234+',
-        user: 'noreply.ecommerce.g7@gmail.com'
+        pass: MAIL_PASS,
+        user: MAIL_USER
     },
     tls: { rejectUnauthorized: false },
 });
@@ -19,7 +21,7 @@ module.exports = function mailSender(to, name, subject, token){
         <div>
             <h2>Hi ${name}</h2>
             <h3>Please click the following link to reset your password.</h3>
-            <h4><a href='http://localhost:3000/account/recovery?token=${token}'>Reset Your Password</a></h4>
+            <h4><a href='${LINK_RECOVER_PASS}${token}'>Reset Your Password</a></h4>
         </div>`
     };
 
