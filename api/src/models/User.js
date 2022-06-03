@@ -24,11 +24,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    last_name: {
+    lastname: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    date_of_birth: {
+    birthday: {
       type: DataTypes.STRING,
     },
     country: {

@@ -1,36 +1,17 @@
-import axios from "axios";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { userLogin } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticate } from "../redux/actions";
 
 export default function useAuthenticate (){
     const dispatch = useDispatch();
-    const history = useHistory();
+    const userLogged = useSelector(state => state.userLogged);
 
-    const [ auth, setAuth ] = useState(false);
+    const token = localStorage.getItem('jwt') || userLogged?.signature;
 
-    const token = sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
-
-    const authenticate = () => {
-/*         axios.get('/authenticate', { 
-            headers: {
-            'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(res => {
-            dispatch(userLogin(res.data.response))
-            setAuth(true);
-        })
-        .catch(res => {
-            sessionStorage.removeItem('jwt');
-            localStorage.removeItem('jwt');
-            history.push('/');
-        }) */
+    const auth = () => {
+        dispatch(authenticate(token));
     }
         
-      return {
-          authenticate,
-          auth
-      }
+    return {
+      auth,
+    }
 }

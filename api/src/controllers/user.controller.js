@@ -42,10 +42,7 @@ const login = async (req, res) => {
 
         const { password, ...user } = userFind.toJSON();
 
-        const userData = {
-            signature, 
-            user
-        }
+        const userData = { signature, user };
 
         successResponse(res, userData);
     } catch (error) {
@@ -62,8 +59,8 @@ const register = async (req, res) => {
         const [ newUser, created ] = await User.findOrCreate({ 
             where: { email: user.email },
             defaults: {
-                password: hashPass,
-                ...user
+                ...user,
+                password: hashPass                
             }
         });
         
@@ -116,11 +113,27 @@ const updateUser = async (req, res) => {
     }
 }
 
+const authenticate = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        const userFind = await User.findByPk(userId);
+        if(!userFind) throw new Error("User doesn't found");
+
+        const { password, ...user } = userFind.toJSON();
+
+        successResponse(res, user, 201);
+    } catch (error) {
+        errorResponse(res, error.message);
+    }
+}
+
 module.exports = {
     getUsers,
     login, 
     register,
     checkCredentials,
     deleteUser,
-    updateUser
+    updateUser,
+    authenticate
 }
