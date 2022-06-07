@@ -1,12 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser } from '../redux/actions';
 
 const useUser = () => {
+    const dispatch = useDispatch();
     const reduxUser = useSelector(state => state.userLogged);
 
-  return {
-    isLogged: Boolean(reduxUser)
-  }
+    const logout = () => {
+        localStorage.removeItem('jwt');
+        sessionStorage.removeItem('jwt');
+        dispatch(logoutUser());
+    }
+
+    return {
+        isLogged: Boolean(reduxUser),
+        logout
+    }
 }
 
 export default useUser

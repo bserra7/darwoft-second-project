@@ -1,25 +1,28 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { COMPLETE_INPUT } from '../redux/actions';
 import validate from '../utils/validate';
 
-const useInput = (state, name, storeForm) => {
-    const [ errors, setErrors ] = useState({});
+const useInput = (name) => {
+    const [ error, setError ] = useState('');
+    const [ input, setInput ] = useState('');
+    const [ validity, setValidity ] = useState(false);
 
-    const dispatch = useDispatch();
-
-    const handleErrors = (event) => {
-        setErrors(validate({
-            ...state,
-            [event.target.name]: event.target.value
-        }))
-        if(!errors[name]) dispatch({ type: COMPLETE_INPUT, payload: { name, value: state[name], storeForm } })
+    const handleError = () => {
+        setError(validate(input, name));
+        if(!error && input) setValidity(true);
     }
+    const handleInput = (event) => {
+        if(validity) setValidity(false);
+        setError('');
+        setInput(event.target.value);
+    } 
 
     return {
-        errors, 
-        setErrors, 
-        handleErrors,
+        input,
+        error,
+        setError, 
+        handleError,
+        handleInput,
+        validity
     }
 }
 

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './styles/styles.scss';
 import { Route, Routes } from 'react-router-dom';
 
@@ -9,20 +8,19 @@ import SignIn from './components/SignIn';
 // Hooks
 import useUser from './hooks/useUser';
 import useAuthenticate from './hooks/useAuthenticate';
+import Home from './components/Home';
 
 function App() {
     const { isLogged } = useUser();
 
-    const { auth } = useAuthenticate();
+    const { auth, token } = useAuthenticate();
 
-    useEffect(() => {
-        if(!isLogged) auth();
-    },[])
+    if(!isLogged && token) auth();
 
     const loggedRoutes = 
         <>
-            <Route path="/" element={<h1>Home Page</h1>} />
-            <Route path="*" element={<h1>Home Page</h1>} />
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<Home />} />
         </>
     const noLoggedRoutes = 
         <>

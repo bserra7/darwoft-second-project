@@ -1,7 +1,8 @@
 const { User } = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET, JWT_EXPIRES } = process.env;
+const path = require('path');
+const { JWT_SECRET, JWT_EXPIRES, PUBLIC_URL } = process.env;
 
 const errorResponse = (res, error, status = 404) => {
     res.status(status).json({
@@ -53,6 +54,9 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     try {
         const user = req.body;
+        console.log(user.email);
+        const { image } = req.files;
+        const extension = image.name.split('.').pop();
 
         const hashPass = bcrypt.hashSync(user.password, 10);
 
@@ -63,8 +67,16 @@ const register = async (req, res) => {
                 password: hashPass                
             }
         });
-        
+
         if(!created) throw new Error("The E-mail is already in use");
+
+        const fileName = `${newUser.id}.${extension}`;
+        const filePath = path.join(__dirname, '..', 'userpics', fileName);
+        const error = await image.mv(filePath);
+        if (error) throw new Error("Error on image saved");
+
+        newUser.image = `${PUBLIC_URL}/${fileName}`;
+        await newUser.save();       
 
         successResponse(res, "User registered successfully", 201)
     } catch (error) {

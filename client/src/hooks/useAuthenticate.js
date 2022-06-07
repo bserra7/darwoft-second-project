@@ -13,5 +13,6 @@ export default function useAuthenticate (){
         
     return {
       auth,
+      token
     }
 }

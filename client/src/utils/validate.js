@@ -1,19 +1,21 @@
-const validate = (state) => {
-    let errors = {};
+const validate = (state, name) => {
+    let error = '';
 
-    if(!state.email) errors.email = "Enter your E-mail";
+    if(!state.length){
+        if(name === "email") error = "Enter your E-mail";
 
-    if(!state.password) errors.password = "Enter your password";
+        if(name === "password") error = "Enter your password";
+    
+        if(name === "name") error = "Enter your name";
+    
+        if(name === "lastname") error = "Enter your lastname";
+    
+        if(name === "birthday") error = "Enter your birthday";
+    
+        if(name === "country") error = "Enter your country";
+    }
 
-    if(!state.name) errors.name = "Enter your name";
-
-    if(!state.lastname) errors.lastname = "Enter your lastname";
-
-    if(!state.birthday) errors.birthday = "Enter your birthday";
-
-    if(!state.country) errors.country = "Enter your country";
-
-    return errors;
+    return error;
 }
 
 export default validate

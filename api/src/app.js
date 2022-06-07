@@ -1,12 +1,14 @@
 const express = require('express');
 const routes = require('./routes/index');
 const morgan = require('morgan');
+const fileupload = require('express-fileupload');
 
 const server = express();
 
 server.name = 'API';
-server.use(express.urlencoded({ extended: true, limit: "50mb" }));
+server.use(fileupload());
 server.use(express.json({ limit: '50mb' }));
+server.use(express.urlencoded({ extended: true }));
 server.use(morgan('dev'));
 server.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,6 +22,8 @@ server.use(function(req, res, next) {
         next();
     }
   });
+
+  server.use(express.static('userpics'));
 
   server.use('/', routes);
 

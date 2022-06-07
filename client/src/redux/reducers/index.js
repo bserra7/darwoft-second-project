@@ -1,4 +1,4 @@
-import { COMPLETE_INPUT, LOG_USER } from "../actions"
+import { CLEAR_STORE, COMPLETE_INPUT, LOGOUT_USER, LOG_USER } from "../actions"
 
 const initialState = {
     userLogged: null,
@@ -30,6 +30,16 @@ export default function rootReducer(state = initialState, action){
             return{
                 ...state,
                 userLogged: action.payload
+            }
+        case LOGOUT_USER:
+            return {
+                ...state,
+                userLogged: null
+            }
+        case CLEAR_STORE:
+            return{
+                ...state,
+                [action.payload]: initialState[action.payload]
             }
         default: 
         return state

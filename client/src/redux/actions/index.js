@@ -3,6 +3,8 @@ import swal from 'sweetalert';
 
 export const COMPLETE_INPUT = 'COMPLETE_INPUT';
 export const LOG_USER = 'LOG_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const CLEAR_STORE = 'CLEAR_STORE';
 
 const swalError = (error) => {
     swal({
@@ -13,10 +15,12 @@ const swalError = (error) => {
     })
 }
 
-export const signUp = (formData) => {
+export const signUp = (user) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.post('/user/register', {...formData});
+            const formData = new FormData();
+            Object.keys(user).forEach(property => formData.append(property, user[property]))
+            const { data } = await axios.post('/user/register', formData);
             if(data.success) {
                 swal({
                     title: data.response,
@@ -60,5 +64,11 @@ export const authenticate = (token) => {
             localStorage.removeItem('jwt')
             swalError(error);
         }
+    }
+}
+
+export const logoutUser = () => {
+    return {
+        type: LOGOUT_USER
     }
 }
